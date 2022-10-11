@@ -12,8 +12,8 @@ using Project_Backend.Db_Context;
 namespace Project_Backend.Migrations.VendorDb
 {
     [DbContext(typeof(VendorDbContext))]
-    [Migration("20220929071455_VendorMig3")]
-    partial class VendorMig3
+    [Migration("20221004163026_VenMig1")]
+    partial class VenMig1
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -30,7 +30,30 @@ namespace Project_Backend.Migrations.VendorDb
                         .ValueGeneratedOnAdd()
                         .HasColumnType("uniqueidentifier");
 
+                    b.Property<string>("Address")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
                     b.Property<string>("Date")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Emp_ID")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Equipment")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Furniture")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<Guid>("Orders_ID")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<string>("Ven_ID")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 

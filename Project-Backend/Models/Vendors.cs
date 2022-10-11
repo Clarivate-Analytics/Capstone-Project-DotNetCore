@@ -11,8 +11,18 @@ namespace Project_Backend.Models
         [ForeignKey("Orders")]
         public Guid Orders_ID { get; set; }
 
-        public virtual Orders Orders { get; set; }
+        public string Emp_ID { get; set; }
+
+        public string Furniture { get; set; }
+
+        public string Equipment { get; set; }
+
+        public string Address { get; set; }
 
         public string Date { get; set; }
+
+        public string Ven_ID { get; set; }
+
+
     }
 }

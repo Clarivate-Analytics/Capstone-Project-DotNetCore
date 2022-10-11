@@ -32,6 +32,14 @@ namespace Project_Backend.Migrations.OrdersDb
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
+                    b.Property<string>("Adm_ID")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Emp_ID")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
                     b.Property<string>("Equipment")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
@@ -40,65 +48,12 @@ namespace Project_Backend.Migrations.OrdersDb
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<Guid>("Registration_ID")
-                        .HasColumnType("uniqueidentifier");
+                    b.Property<int>("Response")
+                        .HasColumnType("int");
 
                     b.HasKey("OrderId");
 
-                    b.HasIndex("Registration_ID");
-
                     b.ToTable("Orders");
-                });
-
-            modelBuilder.Entity("Project_Backend.Models.Registration", b =>
-                {
-                    b.Property<Guid>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("uniqueidentifier");
-
-                    b.Property<string>("Email")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("EmpID")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("FirstName")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("LastName")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("Password")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("Role")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.HasKey("Id");
-
-                    b.ToTable("Registration");
-                });
-
-            modelBuilder.Entity("Project_Backend.Models.Orders", b =>
-                {
-                    b.HasOne("Project_Backend.Models.Registration", "Registration")
-                        .WithMany("order")
-                        .HasForeignKey("Registration_ID")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("Registration");
-                });
-
-            modelBuilder.Entity("Project_Backend.Models.Registration", b =>
-                {
-                    b.Navigation("order");
                 });
 #pragma warning restore 612, 618
         }

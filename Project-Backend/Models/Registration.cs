@@ -1,4 +1,5 @@
 ﻿using System.ComponentModel.DataAnnotations;
+using System.Diagnostics.CodeAnalysis;
 
 namespace Project_Backend.Models
 {
@@ -12,8 +13,6 @@ namespace Project_Backend.Models
         public string Role { get; set; }
         public string Email { get; set; }
         public string Password { get; set; }
-
-        public ICollection<Orders> order { get; set; }
 
     }
 }

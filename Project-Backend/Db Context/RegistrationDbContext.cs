@@ -11,6 +11,6 @@ namespace Project_Backend.Db_Context
         }
 
         //Dbset
-        public DbSet<Registration> Register { get; set; }
+        public DbSet<Registration> Registration { get; set; }
     }
 }

@@ -9,11 +9,11 @@ using Project_Backend.Db_Context;
 
 #nullable disable
 
-namespace Project_Backend.Migrations.OrdersDb
+namespace Project_Backend.Migrations
 {
-    [DbContext(typeof(OrdersDbContext))]
-    [Migration("20220929070142_OrdersMig")]
-    partial class OrdersMig
+    [DbContext(typeof(RegistrationDbContext))]
+    [Migration("20221004142502_RegMig1")]
+    partial class RegMig1
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -23,34 +23,6 @@ namespace Project_Backend.Migrations.OrdersDb
                 .HasAnnotation("Relational:MaxIdentifierLength", 128);
 
             SqlServerModelBuilderExtensions.UseIdentityColumns(modelBuilder, 1L, 1);
-
-            modelBuilder.Entity("Project_Backend.Models.Orders", b =>
-                {
-                    b.Property<Guid>("OrderId")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("uniqueidentifier");
-
-                    b.Property<string>("Address")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("Equipment")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("Furniture")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<Guid>("Registration_ID")
-                        .HasColumnType("uniqueidentifier");
-
-                    b.HasKey("OrderId");
-
-                    b.HasIndex("Registration_ID");
-
-                    b.ToTable("Orders");
-                });
 
             modelBuilder.Entity("Project_Backend.Models.Registration", b =>
                 {
@@ -85,22 +57,6 @@ namespace Project_Backend.Migrations.OrdersDb
                     b.HasKey("Id");
 
                     b.ToTable("Registration");
-                });
-
-            modelBuilder.Entity("Project_Backend.Models.Orders", b =>
-                {
-                    b.HasOne("Project_Backend.Models.Registration", "Registration")
-                        .WithMany("order")
-                        .HasForeignKey("Registration_ID")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("Registration");
-                });
-
-            modelBuilder.Entity("Project_Backend.Models.Registration", b =>
-                {
-                    b.Navigation("order");
                 });
 #pragma warning restore 612, 618
         }
