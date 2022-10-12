@@ -11,7 +11,8 @@ namespace Project_Backend.Models
         [ForeignKey("Orders")]
         public Guid Orders_ID { get; set; }
 
-        public string Emp_ID { get; set; }
+        [ForeignKey("Registration")]
+        public Guid Emp_ID { get; set; }
 
         public string Furniture { get; set; }
 

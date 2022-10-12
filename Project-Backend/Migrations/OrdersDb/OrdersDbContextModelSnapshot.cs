@@ -36,9 +36,8 @@ namespace Project_Backend.Migrations.OrdersDb
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<string>("Emp_ID")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
+                    b.Property<Guid>("Emp_ID")
+                        .HasColumnType("uniqueidentifier");
 
                     b.Property<string>("Equipment")
                         .IsRequired()

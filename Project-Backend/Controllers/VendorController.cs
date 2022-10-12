@@ -24,22 +24,6 @@ namespace Project.Controllers
             return Ok(vendor);
         }
 
-        //GET single data
-        //[HttpGet]
-        //[Route("{id}")]
-        //[ActionName(nameof(GetSingleData))]
-        //public async Task<IActionResult> GetSingleData([FromRoute] string id)
-        //{
-
-        //    var vendor = await vendorDbContext.Vendors.FirstOrDefaultAsync(x => x.EmpID == id);
-        //    if (vendor == null)
-        //    {
-        //        Console.WriteLine("email not found");
-        //    }
-        //    Console.WriteLine("email found");
-        //    return Ok(vendor);
-        //}
-
         //POST single data
         [HttpPost]
         [ActionName(nameof(AddData))]
@@ -51,6 +35,8 @@ namespace Project.Controllers
             return CreatedAtAction(nameof(AddData), vendor.ID, vendor);
         }
 
+
+        //PUT Date and VendorId
         [HttpPut]
         [Route("{id:guid}")]
         [ActionName(nameof(UpdateData))]
@@ -77,21 +63,6 @@ namespace Project.Controllers
 
         }
 
-        [HttpDelete]
-        [Route("{id:guid}")]
-        [ActionName(nameof(DeleteOrder))]
-        public async Task<IActionResult> DeleteOrder([FromRoute] Guid id)
-        {
-            var existing_order = await vendorDbContext.Vendors.FirstOrDefaultAsync(x => x.ID == id);
-            if (existing_order != null)
-            {
-                vendorDbContext.Remove(existing_order);
-                await vendorDbContext.SaveChangesAsync();
-                return Ok(existing_order);
-            }
-
-            return NotFound("Employee not found");
-        }
 
     }
 }

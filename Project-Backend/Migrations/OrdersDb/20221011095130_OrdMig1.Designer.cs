@@ -9,11 +9,11 @@ using Project_Backend.Db_Context;
 
 #nullable disable
 
-namespace Project_Backend.Migrations.VendorDb
+namespace Project_Backend.Migrations.OrdersDb
 {
-    [DbContext(typeof(VendorDbContext))]
-    [Migration("20221004163026_VenMig1")]
-    partial class VenMig1
+    [DbContext(typeof(OrdersDbContext))]
+    [Migration("20221011095130_OrdMig1")]
+    partial class OrdMig1
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -24,9 +24,9 @@ namespace Project_Backend.Migrations.VendorDb
 
             SqlServerModelBuilderExtensions.UseIdentityColumns(modelBuilder, 1L, 1);
 
-            modelBuilder.Entity("Project_Backend.Models.Vendors", b =>
+            modelBuilder.Entity("Project_Backend.Models.Orders", b =>
                 {
-                    b.Property<Guid>("ID")
+                    b.Property<Guid>("OrderId")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("uniqueidentifier");
 
@@ -34,13 +34,12 @@ namespace Project_Backend.Migrations.VendorDb
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<string>("Date")
+                    b.Property<string>("Adm_ID")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<string>("Emp_ID")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
+                    b.Property<Guid>("Emp_ID")
+                        .HasColumnType("uniqueidentifier");
 
                     b.Property<string>("Equipment")
                         .IsRequired()
@@ -50,16 +49,12 @@ namespace Project_Backend.Migrations.VendorDb
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<Guid>("Orders_ID")
-                        .HasColumnType("uniqueidentifier");
+                    b.Property<int>("Response")
+                        .HasColumnType("int");
 
-                    b.Property<string>("Ven_ID")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
+                    b.HasKey("OrderId");
 
-                    b.HasKey("ID");
-
-                    b.ToTable("Vendors");
+                    b.ToTable("Orders");
                 });
 #pragma warning restore 612, 618
         }

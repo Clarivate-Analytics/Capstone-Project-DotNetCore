@@ -54,22 +54,6 @@ namespace Project_Backend.Controllers
         }
 
 
-        //GET employee id
-        [HttpGet]
-        [Route("/id/{id:guid}")]
-        [ActionName(nameof(GetSingleEmp))]
-        public async Task<IActionResult> GetEmpId([FromRoute] Guid id)
-        {
-            var register = await registrationDbContext.Registration.FirstOrDefaultAsync(x => x.Id == id);
-            if (register == null)
-            {
-                Console.WriteLine("id not found");
-                return NotFound("id not found");
-            }
-            Console.WriteLine("email found");
-            return Ok(register.EmpID);
-        }
-
         //POST single data
         [HttpPost]
         [ActionName("AddEmp")]
@@ -81,16 +65,15 @@ namespace Project_Backend.Controllers
             return CreatedAtAction(nameof(GetSingleEmp), registration.Id, registration);
         }
 
-
+        //Login
         [HttpPost]
         [Route("login")]
-        [ActionName("Login/{mailid}")]
+        [ActionName("Login")]
         public IActionResult Login([FromBody]ArrayList cred)
         {
             string email = cred[0].ToString();
             string pswd = cred[1].ToString();
             Console.WriteLine();
-            //return Ok("");
             if (email == null && pswd == null)
             {
                 return BadRequest();
@@ -121,7 +104,7 @@ namespace Project_Backend.Controllers
             }
         }
 
-
+        //Generate TOKEN
         private string GenerateToken(Registration user)
         {
             var tokenhandler = new JwtSecurityTokenHandler();
@@ -129,7 +112,7 @@ namespace Project_Backend.Controllers
             var credential = new SigningCredentials(key, SecurityAlgorithms.HmacSha256);
             var claims = new[]
             {
-                new Claim("Employee ID", user.EmpID),
+                new Claim("Employee ID", user.EmpCode),
                 new Claim("Email", user.Email),
                 new Claim("Role", user.Role),
                 new Claim("Password", user.Password)

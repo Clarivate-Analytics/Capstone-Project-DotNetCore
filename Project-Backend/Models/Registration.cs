@@ -7,7 +7,8 @@ namespace Project_Backend.Models
     {
         [Key]
         public Guid Id { get; set; }
-        public string EmpID { get; set; }
+
+        public string EmpCode { get; set; }
         public string FirstName { get; set; }
         public string LastName { get; set; }
         public string Role { get; set; }

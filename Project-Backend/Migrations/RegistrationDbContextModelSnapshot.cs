@@ -32,7 +32,7 @@ namespace Project_Backend.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<string>("EmpID")
+                    b.Property<string>("EmpCode")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 

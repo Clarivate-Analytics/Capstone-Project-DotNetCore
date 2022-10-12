@@ -15,7 +15,7 @@ namespace Project_Backend.Migrations.VendorDb
                 {
                     ID = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
                     Orders_ID = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
-                    Emp_ID = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    Emp_ID = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
                     Furniture = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     Equipment = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     Address = table.Column<string>(type: "nvarchar(max)", nullable: false),

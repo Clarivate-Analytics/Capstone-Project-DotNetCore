@@ -2,6 +2,7 @@
 using Microsoft.EntityFrameworkCore;
 using Project_Backend.Db_Context;
 using Project_Backend.Models;
+using Project_Backend.Models.VM;
 
 namespace Project_Backend.Controllers
 {
@@ -12,9 +13,12 @@ namespace Project_Backend.Controllers
     {
         private readonly OrdersDbContext ordersDbContext;
 
-        public OrdersController(OrdersDbContext ordersDbContext)
+        private readonly RegistrationDbContext registrationDbContext;
+
+        public OrdersController(OrdersDbContext ordersDbContext, RegistrationDbContext registrationDbContext)
         {
             this.ordersDbContext = ordersDbContext;
+            this.registrationDbContext = registrationDbContext;
         }
 
         //GET all orders
@@ -22,13 +26,25 @@ namespace Project_Backend.Controllers
         public async Task<IActionResult> GetOrders()
         {
             var order = await ordersDbContext.Orders.ToListAsync();
-            return Ok(order);
+            var res = await registrationDbContext.Registration.ToListAsync();
+            IEnumerable<OrdersVM> ordersVMs = (IEnumerable<OrdersVM>)order.Select(x => new OrdersVM
+            {
+                OrderId = x.OrderId,
+                Emp_ID = x.Emp_ID,
+                EmpName = res.FirstOrDefault(y => y.Id == x.Emp_ID)?.FirstName + " " + res.FirstOrDefault(y => y.Id == x.Emp_ID)?.LastName,
+                Furniture = x.Furniture,
+                Equipment = x.Equipment,
+                Address = x.Address,
+                Response = x.Response,
+                Adm_ID = x.Adm_ID
+            });
+            return Ok(ordersVMs);
         }
 
 
         //GET single order data
         [HttpGet]
-        [Route("{id:guid}")] //child ------ ~/order/{id}
+        [Route("{id:guid}")]
         [ActionName(nameof(GetSingleOrder))]
         public async Task<IActionResult> GetSingleOrder([FromRoute] Guid id)
         {
@@ -46,9 +62,9 @@ namespace Project_Backend.Controllers
 
         //GET orders of single employee
         [HttpGet]
-        [Route("emp_orders/{eid}")] //child ------ ~/order/{id}
+        [Route("emp_orders/{eid:guid}")]
         [ActionName(nameof(GetSingleEmpOrder))]
-        public async Task<IActionResult> GetSingleEmpOrder([FromRoute] string eid)
+        public async Task<IActionResult> GetSingleEmpOrder([FromRoute] Guid eid)
         {
             var query = from Orders in ordersDbContext.Orders where Orders.Emp_ID == eid select Orders;
             var ord = await query.ToListAsync();
@@ -58,9 +74,9 @@ namespace Project_Backend.Controllers
 
         //GET furniture of single employee
         [HttpGet]
-        [Route("furniture/{eid}")] //child ------ ~/order/{id}
+        [Route("furniture/{eid:guid}")] 
         [ActionName(nameof(GetSingleEmpOrder))]
-        public async Task<IActionResult> GetEmpOrderFurniture([FromRoute] string eid)
+        public async Task<IActionResult> GetEmpOrderFurniture([FromRoute] Guid eid)
         {
             var query = from Orders in ordersDbContext.Orders where Orders.Emp_ID == eid select Orders.Furniture;
             var ord = await query.ToListAsync();
@@ -70,9 +86,9 @@ namespace Project_Backend.Controllers
 
         //GET IT equipment of single employee
         [HttpGet]
-        [Route("equipment/{eid}")] //child ------ ~/order/{id}
+        [Route("equipment/{eid:guid}")] 
         [ActionName(nameof(GetEmpOrderITEquipment))]
-        public async Task<IActionResult> GetEmpOrderITEquipment([FromRoute] string eid)
+        public async Task<IActionResult> GetEmpOrderITEquipment([FromRoute] Guid eid)
         {
             var query = from Orders in ordersDbContext.Orders where Orders.Emp_ID == eid select Orders.Equipment;
             var ord = await query.ToListAsync();
@@ -98,6 +114,8 @@ namespace Project_Backend.Controllers
         [ActionName(nameof(UpdateOrder))]
         public async Task<IActionResult> UpdateOrder([FromRoute] Guid id, [FromBody] Orders data)
         {
+            Console.WriteLine(data);
+
             var existing_vendor = await ordersDbContext.Orders.FirstOrDefaultAsync(x => x.OrderId == id);
             if (existing_vendor != null)
             {
@@ -115,21 +133,6 @@ namespace Project_Backend.Controllers
             return NotFound("Employee not found");
         }
 
-        [HttpDelete]
-        [Route("{id:guid}")]
-        [ActionName(nameof(DeleteOrder))]
-        public async Task<IActionResult> DeleteOrder([FromRoute] Guid id)
-        {
-            var existing_order = await ordersDbContext.Orders.FirstOrDefaultAsync(x => x.OrderId == id);
-            if (existing_order != null)
-            {
-                ordersDbContext.Remove(existing_order);
-                await ordersDbContext.SaveChangesAsync();
-                return Ok(existing_order);
-            }
-
-            return NotFound("Employee not found");
-        }
 
     }
 }

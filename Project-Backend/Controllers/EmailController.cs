@@ -38,7 +38,7 @@ namespace Project_Backend.Controllers
 
             var empid = ven.FirstOrDefault(x => x.Orders_ID == id)?.Emp_ID;
 
-            var mailid = reg.FirstOrDefault(x => x.EmpID == empid)?.Email;
+            var mailid = reg.FirstOrDefault(x => x.Id == empid)?.Email;
 
             if (!string.IsNullOrEmpty(mailid))
             {
@@ -69,7 +69,7 @@ namespace Project_Backend.Controllers
 
             var empid = ven.FirstOrDefault(x => x.Orders_ID == id)?.Emp_ID;
 
-            var mailid = reg.FirstOrDefault(x => x.EmpID == empid)?.Email;
+            var mailid = reg.FirstOrDefault(x => x.Id == empid)?.Email;
 
             if (!string.IsNullOrEmpty(mailid))
             {

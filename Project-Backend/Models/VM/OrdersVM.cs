@@ -1,14 +1,12 @@
 ﻿using System.ComponentModel.DataAnnotations.Schema;
 using System.ComponentModel.DataAnnotations;
 
-namespace Project_Backend.Models
+namespace Project_Backend.Models.VM
 {
-    public class Orders
+    public class OrdersVM
     {
-        [Key]
         public Guid OrderId { get; set; }
 
-        [ForeignKey("Registration")]
         public Guid Emp_ID { get; set; }
 
         public string Furniture { get; set; }
@@ -21,7 +19,6 @@ namespace Project_Backend.Models
 
         public string Adm_ID { get; set; }
 
-        
-
+        public string EmpName { get; set; }
     }
 }

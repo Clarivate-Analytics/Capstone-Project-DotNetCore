@@ -9,11 +9,11 @@ using Project_Backend.Db_Context;
 
 #nullable disable
 
-namespace Project_Backend.Migrations
+namespace Project_Backend.Migrations.VendorDb
 {
-    [DbContext(typeof(RegistrationDbContext))]
-    [Migration("20221004142502_RegMig1")]
-    partial class RegMig1
+    [DbContext(typeof(VendorDbContext))]
+    [Migration("20221011095151_VenMig1")]
+    partial class VenMig1
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -24,39 +24,41 @@ namespace Project_Backend.Migrations
 
             SqlServerModelBuilderExtensions.UseIdentityColumns(modelBuilder, 1L, 1);
 
-            modelBuilder.Entity("Project_Backend.Models.Registration", b =>
+            modelBuilder.Entity("Project_Backend.Models.Vendors", b =>
                 {
-                    b.Property<Guid>("Id")
+                    b.Property<Guid>("ID")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("uniqueidentifier");
 
-                    b.Property<string>("Email")
+                    b.Property<string>("Address")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<string>("EmpID")
+                    b.Property<string>("Date")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<string>("FirstName")
+                    b.Property<Guid>("Emp_ID")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<string>("Equipment")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<string>("LastName")
+                    b.Property<string>("Furniture")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<string>("Password")
+                    b.Property<Guid>("Orders_ID")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<string>("Ven_ID")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<string>("Role")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
+                    b.HasKey("ID");
 
-                    b.HasKey("Id");
-
-                    b.ToTable("Registration");
+                    b.ToTable("Vendors");
                 });
 #pragma warning restore 612, 618
         }
